@@ -11,11 +11,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
-import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
-import android.widget.ListAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -878,20 +875,7 @@ public class SwipeLayout extends FrameLayout {
      * @return true when item is enabled, else disabled.
      */
     private boolean isEnabledInAdapterView(){
-        AdapterView adapterView = getAdapterView();
-        boolean enable = true;
-        if(adapterView != null){
-            Adapter adapter = adapterView.getAdapter();
-            if(adapter != null){
-                int p = adapterView.getPositionForView(SwipeLayout.this);
-                if(adapter instanceof BaseAdapter){
-                    enable = ((BaseAdapter) adapter).isEnabled(p);
-                }else if(adapter instanceof ListAdapter){
-                    enable = ((ListAdapter) adapter).isEnabled(p);
-                }
-            }
-        }
-        return enable;
+        return true;
     }
 
     public void setSwipeEnabled(boolean enabled){
@@ -950,7 +934,12 @@ public class SwipeLayout extends FrameLayout {
          */
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
-            if(mDoubleClickListener == null){
+	        // tempFix - TODO change implementation to itemView, add a callback here.
+	        if (getOpenStatus() == Status.Close)
+		        open();
+	        else close();
+	        // End tempFix
+		        if(mDoubleClickListener == null){
                 performAdapterViewItemClick(e);
             }
             return true;
