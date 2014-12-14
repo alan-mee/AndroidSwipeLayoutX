@@ -7,11 +7,9 @@ android {
     minSdkVersion 8
     targetSdkVersion 21
   }
-  productFlavors {
-  }
 }
 
 dependencies {
-  compile 'com.android.support:support-v4:21.+'
+  compile 'com.android.support:support-v4:21.0.3'
 }
-apply from: './gradle-mvn-push.gradle'
+//apply from: './gradle-mvn-push.gradle'
